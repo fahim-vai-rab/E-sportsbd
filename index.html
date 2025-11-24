@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>FF Tournament Registration</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+</head>
+<body>
+
+<div class="page-bg">
+  <div class="card" id="card">
+
+    <div class="top-bar"></div>
+    <div class="card-inner">
+
+      <!-- Step 1 -->
+      <div id="step1" class="step active">
+        <h1 class="title">Winter Rising Tournament - Official Registration</h1>
+        <p class="small">Hosted by: E-sports BD</p>
+
+        <div class="info-box">
+          <h3>কঠোর নিয়মাবলী (Strict Rules):</h3>
+          <ul>
+            <li>NO HACK: কোনো ধরনের হ্যাক/মোড/ক্লিপ/স্ক্রিপ্ট নিষিদ্ধ।</li>
+            <li>SQUAD BAN: টিমের কারো কারণে আক্রান্ত হলে পুরো স্কোয়াড BAN হতে পারে।</li>
+          </ul>
+          <h4>রেজিস্ট্রেশন নোট:</h4>
+          <p>YouTube সাবস্ক্রাইব ও Facebook পেজ ফলো করার স্ক্রিনশট দিতে হবে। ভুল তথ্য দিলে রেজিস্ট্রেশন বাতিল হবে।</p>
+          <p>
+          <ul>
+          <li>Facebook link: <a href=""></a></li>
+          <li>YouTube link: <a href=""></a></li>
+          </ul>
+          </p>
+        </div>
+
+        <label class="checkbox-line">
+          <input type="checkbox" id="acceptTerms"><span>আমি সমস্ত নিয়ম ও শর্তসমূহ মেনে নিচ্ছি</span>
+        </label>
+        <div class="error-text" id="acceptTerms_error"></div>
+
+        <div class="nav-row">
+          <button class="btn next" onclick="goNext(2)">Next</button>
+        </div>
+      </div>
+
+      <!-- Step 2: Team Info -->
+      <div id="step2" class="step">
+        <h2 class="section-header">Section 1: Team Information (দলের তথ্য)</h2>
+
+        <label class="q">1. Team Name (দলের নাম) <span class="req">*</span></label>
+        <input id="teamName" class="input" type="text">
+        <div class="error-text" id="teamName_error"></div>
+
+        <label class="q">2. Team Logo (Optional)</label>
+        <p class="hint">Upload 1 supported file. Max 10 MB.</p>
+        <input id="teamLogo" class="file-input" type="file" accept="image/*">
+        <div class="error-text" id="teamLogo_error"></div>
+
+        <label class="q">3. Team Type</label>
+        <select id="teamType" class="input">
+          <option value="Open">Regular</option>
+          <option value="Female">Guest</option>
+        </select>
+        <div class="error-text" id="teamType_error"></div>
+
+        <div class="nav-row">
+          <button class="btn back" onclick="goPrev(1)">Back</button>
+          <button class="btn next" onclick="goNext(3)">Next</button>
+        </div>
+      </div>
+
+      <!-- Step 3: Squad Members -->
+      <div id="step3" class="step">
+        <h2 class="section-header">Section 2: Squad Members Info (বাকি সদস্যদের তথ্য)</h2>
+
+        <label class="q">Captain's Real Name *</label>
+        <input id="captainReal" class="input" type="text">
+        <div class="error-text" id="captainReal_error"></div>
+
+        <label class="q">Captain's WhatsApp Number *</label>
+        <input id="captainPhone" class="input" type="text" inputmode="numeric">
+        <div class="error-text" id="captainPhone_error"></div>
+
+        <label class="q">Player 1 (Captain) - IGN *</label>
+        <input id="p1_ign" class="input" type="text">
+        <div class="error-text" id="p1_ign_error"></div>
+
+        <label class="q">Player 1 (Captain) - UID *</label>
+        <input id="p1_uid" class="input" type="text">
+        <div class="error-text" id="p1_uid_error"></div>
+
+        <!-- Player 2 -->
+        <label class="q">Player 2 - In-Game Name (IGN) *</label>
+        <input id="p2_ign" class="input" type="text">
+        <div class="error-text" id="p2_ign_error"></div>
+
+        <label class="q">Player 2 - UID *</label>
+        <input id="p2_uid" class="input" type="text">
+        <div class="error-text" id="p2_uid_error"></div>
+
+        <!-- Player 3 -->
+        <label class="q">Player 3 - In-Game Name (IGN) *</label>
+        <input id="p3_ign" class="input" type="text">
+        <div class="error-text" id="p3_ign_error"></div>
+
+        <label class="q">Player 3 - UID *</label>
+        <input id="p3_uid" class="input" type="text">
+        <div class="error-text" id="p3_uid_error"></div>
+
+        <!-- Player 4 -->
+        <label class="q">Player 4 - In-Game Name (IGN) *</label>
+        <input id="p4_ign" class="input" type="text">
+        <div class="error-text" id="p4_ign_error"></div>
+
+        <label class="q">Player 4 - UID *</label>
+        <input id="p4_uid" class="input" type="text">
+        <div class="error-text" id="p4_uid_error"></div>
+
+        <!-- Substitute optional -->
+        <label class="q">Player 5 - UID & IGN (Optional)</label>
+        <input id="sub_info" class="input" type="text" placeholder="Name & UID (Optional)">
+
+        <div class="nav-row">
+          <button class="btn back" onclick="goPrev(2)">Back</button>
+          <button class="btn next" onclick="goNext(4)">Next</button>
+        </div>
+      </div>
+
+      <!-- Step 4: Verification & Submit -->
+      <div id="step4" class="step">
+        <h2 class="section-header">Section 4: Verification (যাচাইকরন)</h2>
+
+        <label class="q">YouTube Subscription Screenshot *</label>
+        <input id="yt_ss" type="file" accept="image/*">
+        <div class="error-text" id="yt_ss_error"></div>
+
+        <label class="q">Facebook Follow Screenshot *</label>
+        <input id="fb_ss" type="file" accept="image/*">
+        <div class="error-text" id="fb_ss_error"></div>
+
+        <label class="checkbox-line">
+          <input id="finalConfirm" type="checkbox">
+          <span>আমি নিশ্চিত যে সব তথ্য সঠিক এবং আমি সকল নিয়ম মেনে চলব। </span>
+        </label>
+        <div class="error-text" id="finalConfirm_error"></div>
+
+        <div class="nav-row">
+          <button class="btn back" onclick="goPrev(3)">Back</button>
+          <button class="btn submit" onclick="handleSubmit()">Submit</button>
+        </div>
+      </div>
+
+      <!-- Done -->
+      <div id="done" class="step">
+        <h2 class="section-header success">ধন্যবাদ! রেজিস্ট্রেশন সম্পন্ন হয়েছে</h2>
+        <p>আপনার রেজিস্ট্রেশন আমরা পেয়েছি।</p>
+        <a class="link" href="index.html">Done</a>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
